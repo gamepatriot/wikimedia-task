@@ -6,7 +6,6 @@ import android.widget.GridView;
 
 import com.peteschmitz.wikimediatask.android.R;
 import com.peteschmitz.wikimediatask.android.adapter.ArticleAdapter;
-import com.peteschmitz.wikimediatask.android.network.WikiArticleImageURLTask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -17,18 +16,11 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         GridView gridView = (GridView) findViewById(R.id.grid_view);
-        ArticleAdapter adapter = new ArticleAdapter(this, new String[100]);
+        ArticleAdapter adapter = new ArticleAdapter(
+                this,
+                getResources().getStringArray(R.array.us_presidents_array)
+        );
         gridView.setAdapter(adapter);
-
-        new WikiArticleImageURLTask(this, "Dog"){
-            @Override
-            protected void onPostExecute(String s) {
-                if (s != null){
-
-                }
-            }
-        }
-                .execute();
     }
 
 }
