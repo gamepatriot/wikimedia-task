@@ -5,6 +5,12 @@
 
 Technical demo that attempts to replicate Google's 'card display', as seen on Google Now and Play Newsstand. Additionally, this demo lists US Presidents and attempts to load article images from wikipedia for each president (doesn't work for some).
 
+## Third-party
+
+This demo utilizes the following libraries:
+ListView Animations - https://github.com/nhaarman/ListViewAnimations
+Picasso - https://github.com/square/picasso
+
 
 ## APK
 
