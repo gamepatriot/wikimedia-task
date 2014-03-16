@@ -4,5 +4,7 @@
     <string name="app_name">Wikimedia Task</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="wiki_api">http://en.wikipedia.org/w/api.php</string>
+    <string name="wiki_commons">http://upload.wikimedia.org/wikipedia/commons/</string>
 
 </resources>
