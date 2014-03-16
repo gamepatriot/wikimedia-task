@@ -8,7 +8,9 @@ Technical demo that attempts to replicate Google's 'card display', as seen on Go
 ## Third-party
 
 This demo utilizes the following libraries:
+
 ListView Animations - https://github.com/nhaarman/ListViewAnimations
+
 Picasso - https://github.com/square/picasso
 
 
