@@ -65,6 +65,9 @@ public class WikiArticleImageURLTask extends AsyncTask<Void, Void, String> {
                         // Get file name
                         String fileName = imageObject.getString("imcontinue").split("\\|")[1];
 
+                        // Cancel if not png or jpg
+                        if (!fileName.contains(".png") && !fileName.contains(".jpg")) return "";
+
                         // Get md5 of file name
                         String hash = getHash(fileName);
 

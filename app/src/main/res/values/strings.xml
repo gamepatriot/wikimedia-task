@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="wiki_api">http://en.wikipedia.org/w/api.php</string>
     <string name="wiki_commons">http://upload.wikimedia.org/wikipedia/commons/</string>
+    <string name="label">label</string>
 
 </resources>

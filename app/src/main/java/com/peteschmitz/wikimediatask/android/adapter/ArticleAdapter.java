@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.peteschmitz.wikimediatask.android.R;
 import com.peteschmitz.wikimediatask.android.network.WikiArticleImageURLTask;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -20,6 +23,7 @@ import java.util.Set;
  */
 public class ArticleAdapter extends ArrayAdapter<String> {
 
+    private int[] mColors;
     private Context mContext;
     private HashMap<String, String> mArticleImageMap = new HashMap<String, String>();
     private Set<String> mQueuedImageURLRequests = new HashSet<String>();
@@ -32,6 +36,8 @@ public class ArticleAdapter extends ArrayAdapter<String> {
         super(context, R.layout.grid_item, items);
 
         mContext = context;
+
+        setColors();
     }
 
     @Override
@@ -44,6 +50,19 @@ public class ArticleAdapter extends ArrayAdapter<String> {
 
             holder = new ViewHolder();
             holder.imageContainer = (ImageView) convertView.findViewById(R.id.image_container);
+            holder.imageCaption = (TextView) convertView.findViewById(R.id.image_caption);
+            holder.imagePlaceholder = (LinearLayout) convertView.findViewById(R.id.image_placeholder);
+            holder.callback = new Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.imagePlaceholder.setBackgroundResource(R.color.white);
+                }
+
+                @Override
+                public void onError() {
+                    showPlaceholder(holder);
+                }
+            };
             convertView.setTag(holder);
 
         } else {
@@ -52,7 +71,9 @@ public class ArticleAdapter extends ArrayAdapter<String> {
 
         // Get target article
         final String article = getItem(position);
+
         holder.activeArticle = article;
+        holder.index = position;
 
         // Load article image URL
         if (!mArticleImageMap.containsKey(article)){
@@ -72,7 +93,9 @@ public class ArticleAdapter extends ArrayAdapter<String> {
                         // Insert result to map
                         mArticleImageMap.put(article, s);
 
-                        notifyDataSetInvalidated();
+                        if (holder.activeArticle.equals(article)){
+                            loadViewImage(holder);
+                        }
                     }
                 }
                     .execute();
@@ -81,9 +104,13 @@ public class ArticleAdapter extends ArrayAdapter<String> {
                 mQueuedImageURLRequests.add(article);
             }
 
+            showPlaceholder(holder);
+
         } else {
             loadViewImage(holder);
         }
+
+        holder.imageCaption.setText(holder.activeArticle);
 
         return convertView;
     }
@@ -92,18 +119,38 @@ public class ArticleAdapter extends ArrayAdapter<String> {
         String url = mArticleImageMap.get(holder.activeArticle);
 
         // Cancel load if url is null/empty
-        // TODO: Show placeholder instead
-        if (TextUtils.isEmpty(url)) return;
+        if (TextUtils.isEmpty(url)){
+            showPlaceholder(holder);
+            return;
+        }
 
         Picasso.with(mContext)
                 .load(url)
                 .fit()
                 .centerCrop()
-                .into(holder.imageContainer);
+                .into(holder.imageContainer, holder.callback);
+    }
+
+    private void showPlaceholder(ViewHolder holder) {
+        holder.imageContainer.setImageBitmap(null);
+        holder.imagePlaceholder.setVisibility(View.VISIBLE);
+        holder.imagePlaceholder.setBackgroundColor(getColor(holder.index));
+    }
+
+    private void setColors(){
+        mColors = mContext.getResources().getIntArray(R.array.placeholder_colors);
+    }
+
+    private int getColor(int position){
+        return mColors[position % mColors.length];
     }
 
     private class ViewHolder{
         public String activeArticle;
         public ImageView imageContainer;
+        public TextView imageCaption;
+        public LinearLayout imagePlaceholder;
+        public Callback callback;
+        public int index;
     }
 }

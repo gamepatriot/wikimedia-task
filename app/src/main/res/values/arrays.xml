@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="us_presidents_array">
+    <string-array name="us_presidents_names">
         <item>George Washington</item>
         <item>John Adams</item>
         <item>Thomas Jefferson</item>
@@ -24,7 +24,6 @@
         <item>Chester A. Arthur</item>
         <item>Grover Cleveland</item>
         <item>Benjamin Harrison</item>
-        <item>Grover Cleveland</item>
         <item>William McKinley</item>
         <item>Theodore Roosevelt</item>
         <item>William Howard Taft</item>
@@ -46,4 +45,11 @@
         <item>George W. Bush</item>
         <item>Barack Obama</item>
     </string-array>
+
+    <integer-array name="placeholder_colors">
+        <item>@color/placeholder_red</item>
+        <item>@color/placeholder_orange</item>
+        <item>@color/placeholder_yellow</item>
+        <item>@color/placeholder_green</item>
+    </integer-array>
 </resources>
