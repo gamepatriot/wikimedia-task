@@ -3,7 +3,7 @@
 
 ## About
 
-Technical demo that attempts to replicate Google's 'card display', as seen on Google Now and Play Newsstand. Additionally, this demo lists US Presidents and attempts to load article images from wikipedia for each president (doesn't work for some).
+Technical demo that attempts to replicate Google's 'card display', as seen on Google Now and Play Newsstand. Additionally, this demo lists US Presidents and attempts to load article images from wikipedia for each president.
 
 ## Third-party
 
