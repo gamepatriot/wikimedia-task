@@ -1,6 +1,7 @@
 package com.peteschmitz.wikimediatask.android.adapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class ArticleAdapter extends ArrayAdapter<String> {
                         }
                     }
                 }
-                    .execute();
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 // Add article to queue
                 mQueuedImageURLRequests.add(article);
@@ -118,9 +119,10 @@ public class ArticleAdapter extends ArrayAdapter<String> {
     private void loadViewImage(ViewHolder holder) {
         String url = mArticleImageMap.get(holder.activeArticle);
 
+        showPlaceholder(holder);
+
         // Cancel load if url is null/empty
         if (TextUtils.isEmpty(url)){
-            showPlaceholder(holder);
             return;
         }
 
